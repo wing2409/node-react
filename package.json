@@ -11,6 +11,8 @@
   "author": "hk kim",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1"
   }
 }
