@@ -5,15 +5,21 @@ const port = 5000
 const bodyParser = require('body-parser')
 const { User } = require('./models/User')
 
+const config = require('./config/key')
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-mongoose.connect(
-  'mongodb+srv://test:1234@cluster0.gax5u.mongodb.net/?retryWrites=true&w=majority',
-  {
+mongoose
+  .connect(config.mongoUri, {
     useNewUrlParser: true,
-  },
-)
+  })
+  .then(() => {
+    console.log('mongoose success')
+  })
+  .catch(() => {
+    console.log('mongoose fail')
+  })
 
 app.get('/', (req, res) => {
   res.send('Hello World!!')
