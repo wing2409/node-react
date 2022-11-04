@@ -60,7 +60,7 @@ app.post('/login', (req, res) => {
         res
           .cookie('x_auth', user.token)
           .status(200)
-          .json({ loginStatus: true, user: user })
+          .json({ loginStatus: true, userToken: user.token })
       })
     })
   })
