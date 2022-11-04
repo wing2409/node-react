@@ -34,6 +34,40 @@ app.post('/register', (req, res) => {
   })
 })
 
+app.post('/login', (req, res) => {
+  //요청된 이메일 데이터베이스에서 조회
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      return res.json({
+        loginStatus: false,
+        message: '이메일 및 패스워드를 확인하세요1',
+      })
+    }
+
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch) {
+        return res.json({
+          loginStatus: false,
+          message: '이메일 및 패스워드를 확인하세요2',
+        })
+      }
+
+      console.log('match : ' + isMatch)
+
+      user.generateToken((err, user) => {
+        if (err) return res.status(400).send(err)
+
+        res
+          .cookie('x_auth', user.token)
+          .status(200)
+          .json({ loginStatus: true, user: user })
+      })
+    })
+  })
+  //비밀번호 확인
+  //토큰 생성
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
