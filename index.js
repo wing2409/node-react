@@ -4,6 +4,7 @@ const app = express()
 const port = 5000
 const bodyParser = require('body-parser')
 const { User } = require('./models/User')
+const { auth } = require('./middleware/auth')
 
 const config = require('./config/key')
 
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!!')
 })
 
-app.post('/register', (req, res) => {
+app.post('/api/user/register', (req, res) => {
   const user = new User(req.body)
 
   user.save((err, doc) => {
@@ -34,13 +35,13 @@ app.post('/register', (req, res) => {
   })
 })
 
-app.post('/login', (req, res) => {
+app.post('/api/user/login', (req, res) => {
   //요청된 이메일 데이터베이스에서 조회
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       return res.json({
         loginStatus: false,
-        message: '이메일 및 패스워드를 확인하세요1',
+        message: '이메일 및 패스워드를 확인하세요.',
       })
     }
 
@@ -48,11 +49,9 @@ app.post('/login', (req, res) => {
       if (!isMatch) {
         return res.json({
           loginStatus: false,
-          message: '이메일 및 패스워드를 확인하세요2',
+          message: '이메일 및 패스워드를 확인하세요.',
         })
       }
-
-      console.log('match : ' + isMatch)
 
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err)
@@ -67,6 +66,8 @@ app.post('/login', (req, res) => {
   //비밀번호 확인
   //토큰 생성
 })
+
+app.get('/api/user/auth', auth, (req, res) => {})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
