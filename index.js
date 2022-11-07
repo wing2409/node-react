@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!!')
 })
 
-app.post('/api/user/register', (req, res) => {
+app.post('/api/users/register', (req, res) => {
   const user = new User(req.body)
 
   user.save((err, doc) => {
@@ -35,7 +35,7 @@ app.post('/api/user/register', (req, res) => {
   })
 })
 
-app.post('/api/user/login', (req, res) => {
+app.post('/api/users/login', (req, res) => {
   //요청된 이메일 데이터베이스에서 조회
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
@@ -67,7 +67,12 @@ app.post('/api/user/login', (req, res) => {
   //토큰 생성
 })
 
-app.get('/api/user/auth', auth, (req, res) => {})
+app.get('/api/users/auth', auth, (req, res) => {
+  req.status(200).json({
+    _id: req.user.id,
+    isAdmin: req.user.role === 0 ? false : true,
+  })
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
