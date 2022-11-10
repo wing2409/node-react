@@ -1,12 +1,12 @@
 const express = require('express')
-const mongoose = require('mongoose')
+//const mongoose = require('mongoose')
 const app = express()
 const port = 5000
 const bodyParser = require('body-parser')
-const { User } = require('./models/User')
-const { auth } = require('./middleware/auth')
+const { User } = require('./server/models/User')
+const { auth } = require('./server/middleware/auth')
 
-const config = require('./config/key')
+const config = require('./server/config/key')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
