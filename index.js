@@ -1,7 +1,7 @@
 const express = require('express')
-//const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 const app = express()
-const port = 5000
+const port = 6000
 const bodyParser = require('body-parser')
 const { User } = require('./server/models/User')
 const { auth } = require('./server/middleware/auth')
