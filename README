@@ -4,9 +4,3 @@ module.exports = {
 mongoUri:
 'mongodb+srv://test:1234@cluster0.gax5u.mongodb.net/?retryWrites=true&w=majority',
 }
-
-머지 테스트입니다
-merge to master22222
-머지 테스트입니다
-
-git log --branches --decorate --graph --oneline
