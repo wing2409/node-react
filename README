@@ -8,3 +8,5 @@ mongoUri:
 머지 테스트입니다
 merge to master22222
 머지 테스트입니다
+
+git log --branches --decorate --graph --oneline
